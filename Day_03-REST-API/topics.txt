@@ -1,0 +1,36 @@
+
+Backend Dev..  Day_03: REST API and Postman
+
+
+1)create Express server
+
+2) use Postman 
+  .What is Postman
+  .Why use Postman
+  .How use Postman
+
+
+3) Use of Nodemon Paackage
+  .What is Nademon package
+  .Why use Nodemon Paackage
+  .How install and use Nodemon 
+  
+4) diff b/w npm and npx (node package executor)
+5) What is REST API?
+6)Ways to send data in Requests
+     -req.body
+     -req.params
+     -req.query
+7)Method in REST API
+
+8) Building out first Project (very very very mini Project)
+.create note
+.show all note
+.Update an note
+.Delete an note
+
+
+
+
+
+
