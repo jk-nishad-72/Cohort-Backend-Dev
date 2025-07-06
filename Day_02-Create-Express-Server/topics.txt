@@ -1,0 +1,11 @@
+
+ Day_02: Creating expresse.js server 
+
+// What is  http module server route with Example
+// why we don't use http module directely
+// Explanation of expresse js and installation 
+// expresse.js  routes 
+// what is  request(req) and respons (res)
+// what is an API (Application Programming Interface)
+// What are REST(Representational State Transfer) API 
+// download Postman in system 
