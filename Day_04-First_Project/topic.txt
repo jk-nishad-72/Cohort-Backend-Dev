@@ -1,0 +1,22 @@
+
+
+ BACK-END DEV....  Day_04 : MAKE A MINI PROJECT 
+
+ --Features =>
+  *create a note 
+  *show all notes
+  *Update an note
+  *Delete an note
+
+ #) POSTMAN HTTP METHOD  FOR REQUEST IN SERVER => 
+
+  get api ->  http://localhost:3000/notes  [ to show all notes ]
+
+  post api -> http://localhost:3000/notes  [ body -> raw -> JSON { "heading":"notes_1 test heading" } ]
+
+  delete api -> http://localhost:3000/notes/0    [ { /notes/:index }]  
+
+  patch api -> http://localhost:3000/notes/0   [ body -> raw -> JSON { "heading":" Updated notes_1 heading" } ]
+
+
+ 
