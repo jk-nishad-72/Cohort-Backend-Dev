@@ -1,0 +1,42 @@
+*{
+    margin:0%;
+    padding:0%;
+ box-sizing:border-box;
+ font-family:"gilroy",sans-serif;
+
+}
+
+html,body{
+     height:100%;
+     width: 100%;
+}
+
+#main{
+     
+     height:100%;
+     width: 100%;
+     color: skyblue;
+     background: #000;
+     display: flex;
+     flex-direction: column;
+     gap: 2rem;
+     align-items: center;
+     justify-content: center;
+     padding: 4rem;
+
+     
+     
+}
+#main h1{
+    
+     font-size: 5rem;
+     background:linear-gradient(to right , #188bf7,#d155c1,#f24168,#f45212);
+            -webkit-background-clip: text; /* Clip background to text (WebKit browsers) */
+            -webkit-text-fill-color: transparent; /* Make text color transparent */
+
+}
+
+#main h2{
+     font-size: 3rem;
+     color: springgreen;
+}
