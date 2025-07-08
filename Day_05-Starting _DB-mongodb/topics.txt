@@ -1,0 +1,14 @@
+// topics Day_05 Backend
+
+--what is DataBase
+--why use DataBase
+--creatind db  on mongodb atlas 
+-- how to install mongo campass and use 
+-- what is mongoos package 
+-- how to connect server to db 
+
+
+
+
+
+
