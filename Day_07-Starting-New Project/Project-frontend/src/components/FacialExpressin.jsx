@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as faceapi from 'face-api.js';
 
 export default function FacialExpression() {
     const videoRef = useRef();
+    const [mood, setMood] = useState('🤔 Waiting...');
 
     const loadModels = async () => {
         const MODEL_URL = '/models';
@@ -15,46 +16,81 @@ export default function FacialExpression() {
             .then((stream) => {
                 videoRef.current.srcObject = stream;
             })
-            .catch((err) => console.error("Error accessing webcam: ", err));
+            .catch((err) => {
+                console.error("Error accessing webcam: ", err);
+                setMood("❌ Webcam access denied");
+            });
     };
 
-    async function detectMood() {
-
+    const detectMood = async () => {
         const detections = await faceapi
             .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
             .withFaceExpressions();
-        let mostProableExpression = 0
-        let _expression = '';
 
         if (!detections || detections.length === 0) {
-            console.log("No face detected");
+            setMood("😶 No face detected");
             return;
         }
 
-        for (const expression of Object.keys(detections[ 0 ].expressions)) {
-            if (detections[ 0 ].expressions[ expression ] > mostProableExpression) {
-                mostProableExpression = detections[ 0 ].expressions[ expression ]
-                _expression = expression;
+        let mostProbable = 0;
+        let expression = '';
+
+        for (const key of Object.keys(detections[0].expressions)) {
+            const value = detections[0].expressions[key];
+            if (value > mostProbable) {
+                mostProbable = value;
+                expression = key;
             }
         }
 
-        console.log(_expression)
-    }
+        // Emoji mapping
+        const emojiMap = {
+            happy: "😊",
+            sad: "😢",
+            angry: "😠",
+            surprised: "😮",
+            disgusted: "🤢",
+            fearful: "😨",
+            neutral: "😐"
+        };
+
+        const emoji = emojiMap[expression] || '🤔';
+        setMood(`${emoji} Mood: ${expression}`);
+    };
 
     useEffect(() => {
         loadModels().then(startVideo);
     }, []);
 
     return (
-        <div style={{ position: 'relative' }}>
-            <video
+        <div className='w-full  px-20 h-[30rem] flex flex-col gap-5' >
+
+           <h1 className='text-3xl capitalize font-bold '> Live Mood Detection  </h1>
+
+           <div className='flex ' >
+             
+               <div className=' w-1/2 h-full overflow-hidden '>
+                <video
                 ref={videoRef}
                 autoPlay
                 muted
-                style={{ width: '720px', height: '560px' }}
+               className='w-full h-full rounded-lg  object-cover '
             />
-            <button onClick={detectMood}>Detect Mood</button>
+        </div>
+                    <div className=' w-1/2 flex items-center relative  flex-col justify-center gap-10 '>
+
+                     <h1 className='text-7xl text-[#54189e]'>   {mood}</h1>
+
+                        <button
+                        onClick={detectMood}
+                        className='text-[#fff] bg-[#54189e] text-2xl absolute bottom-10 left-15 py-2 px-5 rounded-md '
+                        
+                        >
+                        Detect Mood
+                    </button>
+                    </div>
+           </div>
+            
         </div>
     );
 }
-
