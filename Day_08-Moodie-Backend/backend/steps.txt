@@ -1,0 +1,8 @@
+
+## package requie or use :-  
+
+1) npm i dotenv :- for read and use the .env variable jo hamari db ki URl ko hold karti hai 
+
+## use .gitignore:- 
+
+ file to hide the DB URL  and use th .env file for url and write the .env file in .gitignore file jisse kisi ko url pta n chale 

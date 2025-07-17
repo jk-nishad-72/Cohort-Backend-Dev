@@ -1,25 +1,18 @@
 
-const express = require("express")
+const app = require('./src/app')
+require('dotenv').config();
+const connetTodb = require('./src/DB/db')
 
-const app = express()
+connetTodb()
 
-app.get('/',(req,res)=>{
+app.get("/",(req,res)=>{
 
     res.send("Welcome to server")
 
 })
 
-app.get('/about',(req,res)=>{
-
-    res.send("Welcome to aboute page ")
-    
-})
-
-
-
 app.listen(3000,()=>{
 
-    console.log("server is running at 3000");
+    console.log("Srvr running at Port http://localhost:3000")
 
-    
 })
