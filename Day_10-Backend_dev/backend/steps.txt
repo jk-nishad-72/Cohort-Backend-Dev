@@ -1,0 +1,33 @@
+
+
+topics 
+
+* how to sand file in server with postman 
+
+* use of postman to send tittle ,artist,and audio file from frontend to backend 
+postman formate :-  POST() url ..  [body] formate ->  form data -> because it send data string and file both
+
+ *these formate of data express defaultely can't  able to  read it so we use multer package 
+
+ *use of multer package 
+ 
+* ab data server me to aa gya ab cloud me kaise stor karein 
+use imagekit for audio file store 
+
+-- go to imagekit documentation search 
+--open git git-hub
+--create service folder on src and create a new file  as storage.service.js 
+-- install
+--initialization
+--
+
+
+
+
+
+## package requie or use :-  
+
+1) npm i multer :- for read and use the req.body data and  
+
+## use .gitignore:- 
+ file to hide the DB URL  and use th .env file for url and write the .env file in .gitignore file jisse kisi ko url pta n chale 
