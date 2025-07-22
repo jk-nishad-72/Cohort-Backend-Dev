@@ -1,5 +1,6 @@
 import { useState } from 'react'
-
+import MoodSong from './components/MoodSong'
+import './App.css'
 import FacialExpressin  from './components/FacialExpressin'
 
 function App() {
@@ -8,10 +9,10 @@ function App() {
   return (
     <>
        
-       <div className='w-full h-screen bg-[#fff] flex items-center justify-center'>
+       <div className='a-main  w-full h-screen bg-[#fff] flex items-center justify-center'>
 
         <FacialExpressin />
-
+        <MoodSong />
        </div>
      
          

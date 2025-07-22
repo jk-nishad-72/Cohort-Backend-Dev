@@ -3,6 +3,7 @@ import * as faceapi from 'face-api.js';
 
 export default function FacialExpression() {
     const videoRef = useRef();
+    
     const [mood, setMood] = useState('🤔 Waiting...');
 
     const loadModels = async () => {

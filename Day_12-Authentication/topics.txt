@@ -1,0 +1,25 @@
+
+
+Day_12 of  Backend Development 
+
+1.Authentication
+problem:-  jab ek server me multiple user same request karte hai tab server kaise 
+differentiate karta hai ki kisne kon sa request kiya hai 
+exaple :-
+a)Tokens is like User_ID of each user 
+2) 2FA -  2 factor Authentication
+
+
+
+brand kon sa hai 
+
+product kya hai 
+
+seo 
+
+
+
+
+
+
+
