@@ -1,7 +1,11 @@
 
 
-topics 
+ Day-14 Backend Development :Authentication completed✅
 
-creating tokens using jwt packaage
-verify user  using tokens 
+ Topics : - 
+
+
+ 1. what is JWT nad JWT package why use it and how use it 
+ 2. How to  generate token  using  JWT secrete key 
+ 3. user Authentication registration and login 
 
