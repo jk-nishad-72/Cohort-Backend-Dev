@@ -1,0 +1,21 @@
+
+   Day_16 of backend dev.. : Deep study of Authentication System and creating Authentication APIs
+
+
+ *)Authentication System : - Depends upon 4 pillors 
+
+ 1.Validation  
+ 2.Verification
+ 3.Autherization
+ 4.Authentication 
+
+
+ // Authentication APIs
+
+ 1.Register API (creating account and tokens )
+ 2.Login API  (user acces and creating tokens)
+ 3.User API  (show the profile(user data ) of user  )
+ 4.log out API (remove acces and tokens of user )
+
+
+

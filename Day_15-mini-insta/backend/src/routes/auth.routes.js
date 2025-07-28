@@ -8,12 +8,19 @@ var jwt = require('jsonwebtoken');
 
 
 
+router.get('/',(req,res)=>{
+
+   res.send("hello ")
+
+})
 
 
-router.post('/regist',async(req,res)=>{
+
+router.post('/register',async(req,res)=>{
 
     const {username,password} = req.body
 
+console.log(username,password)
 
      const existingUser = await userModel.findOne({
         username
@@ -21,7 +28,6 @@ router.post('/regist',async(req,res)=>{
 
      if(!existingUser){
         return res.status(409).json({
-
             message:"username already exists "
         })
      }
@@ -36,6 +42,12 @@ router.post('/regist',async(req,res)=>{
      const token = jwt.sign({
         id:user_id
      },process.env.JWT_SECRET)
+
+
+     res.status(201).json({
+      message:"register sucessfully",
+
+     })
 
 
 })
