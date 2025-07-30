@@ -5,7 +5,8 @@ Day_15 Backend Development : Mini Insta Project
 Topics :-
 
 *.Start new Project:key features 
-1.Creating user Account(registration)
+1.Creating user Account(registration)   this day we completed only registration and login features 
+
 2.User Login 
 3.view user Profile
 4.Post Image and Caption and 

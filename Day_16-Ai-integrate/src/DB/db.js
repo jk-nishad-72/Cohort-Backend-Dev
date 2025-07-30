@@ -11,7 +11,7 @@ function connectTodb(){
         console.log("database connected ")
 
     })
-    .catch(()=>{
+    .catch((error)=>{
 
         console.log("database  not connected ")
 

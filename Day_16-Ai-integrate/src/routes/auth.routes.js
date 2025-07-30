@@ -15,7 +15,7 @@ const router = express.Router()
  * 
  */
 
- // register feature POST  API :-
+ //** */ register feature POST  API :-
 router.post('/register',async(req,res)=>{
        const {username , password} = req.body;
        // cheking for name ya khali hai 
@@ -82,7 +82,7 @@ router.post('/register',async(req,res)=>{
          res.cookie("chacha",token)
          res.status(200).json({
             Message: " Login succesfully" ,
-            token:token
+         
          })
  })
 
@@ -91,7 +91,7 @@ router.post('/register',async(req,res)=>{
 
     const token = req.cookies.chacha
 
-    console.log(token)
+    // console.log(token)
     // res.json(
     //     {
     //         token
@@ -106,12 +106,12 @@ router.post('/register',async(req,res)=>{
     try{
 
        const decode =  jwt.verify(token,process.env.JWT_SECRET)
-       console.log(decode)
+    //    console.log(decode)
 
        const user = await userauthModel.findOne({
         _id:decode.id
        })
-       console.log(user)
+    //    console.log(user)
 
        res.status(200).json({
         Message:"User Profile ",

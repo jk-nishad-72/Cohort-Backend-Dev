@@ -15,18 +15,18 @@ router.get('/',(req,res)=>{
 })
 
 
-
+//* register API :- 
 router.post('/register',async(req,res)=>{
 
     const {username,password} = req.body
 
-console.log(username,password)
+// console.log(username,password)
 
      const existingUser = await userModel.findOne({
         username
      })
 
-     if(!existingUser){
+     if(existingUser){
         return res.status(409).json({
             message:"username already exists "
         })
@@ -40,16 +40,68 @@ console.log(username,password)
     })
 
      const token = jwt.sign({
-        id:user_id
+        id:user._id
      },process.env.JWT_SECRET)
 
+      res.cookie('token',token)
 
      res.status(201).json({
       message:"register sucessfully",
-
      })
 
 
+      
+
 })
+
+//* Login API WITH TOKEN :- 
+
+router.post('/login',async(req,res)=>{
+
+     const {username , password} = req.body
+
+      //* cheking for username diya hai bhi ya nahi
+
+      if(!username){
+         return res.status(401).json({
+            Message:" Invalid UserName"
+         })
+      }
+
+     //* finding username if database
+
+     const userExist = await userModel.findOne({
+      username
+     })
+
+   if(!userExist){
+      return res.status(401).json({
+         Message:" Username not found"
+      })
+   }
+   
+   //* cheking password 
+
+   const isPasswordValid = password === userExist.password
+
+   // * false ke liye check karenge 
+   if(!isPasswordValid){
+      return res.status(401).json({
+         Message:"Incorrect password"
+      })
+   }
+
+    //* Now sab sahi hai token create and login
+    const token = jwt.sign({id:username._id},process.env.JWT_SECRET)
+    res.cookie('token',token)
+    res.status(200).json({
+      Message:"login sucessfully"
+    })
+})
+
+
+
+
+
 
 module.exports=router

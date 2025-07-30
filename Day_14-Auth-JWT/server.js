@@ -1,11 +1,12 @@
 
 const app = require("./src/app")
 
+const connectedTodb = require('./src/DB/db')
 
 
-app.get('/',(req,res)=>{
-    res.send("Welcome to server")
-})
+connectedTodb()
+
+
 
 app.listen(3000,()=>{
 
