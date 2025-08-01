@@ -1,0 +1,14 @@
+
+const express = require('express')
+require('dotenv').config()
+const cookieParser = require('cookie-parser')
+const authRouter = require('../src/routes/auths.route')
+const app = express()
+
+app.use(express.json())
+app.use(cookieParser())
+// app.use()
+app.use('/api/auth',authRouter)
+
+
+module.exports= app
