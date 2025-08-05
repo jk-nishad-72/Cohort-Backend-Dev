@@ -1,0 +1,12 @@
+
+Backend Development Day-21 : STARTING NEW PROJECT(04) :👉 AI CHATBOT 
+
+ TODAY STUDY TOPICS :- 
+
+
+  1. what is LLM (large Language model) and how it works (how ai CHATBOT works )
+  2. Types of AI memory
+  3. What is websocket and features of websocket 
+  4. What is Socket.io 
+  5. How websocket Implements using Socket.io 
+  6.Difference between http and websocket
