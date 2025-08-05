@@ -1,0 +1,11 @@
+
+Day_22 of Backend Development .. Socket . io 
+
+
+
+in-built events => two 1. connect
+                       2. disconnect
+
+
+custom events 
+
