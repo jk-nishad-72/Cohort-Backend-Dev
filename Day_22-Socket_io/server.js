@@ -33,25 +33,25 @@ io.on("connection", (socket) => {
  */
 
 
-  socket.on('message',(data)=>{
+  // socket.on('message',(data)=>{
 
-    console.log(data);
-  })
+  //    console.log("message event fired")
+  //   console.log(data.hello);
+  // })
 
 
-// socket.on('ai-message',async(data)=>{
+socket.on('ai-message',async(data)=>{
 
-//     console.log("Received AI message: " , data.prompt);
-//     const response  = await genrateResponse(data.prompt)
-//     console.log("AI Response ",response)
-//     socket.emit('ai-message-response',{response})
-// })
+    console.log("Received AI message: " , data.prompt);
+    const response  = await genrateResponse(data.prompt)
+    console.log("AI Response ",response)
+    socket.emit('ai-message-response',{response})
+})
 
 
 });
 
 
 httpServer.listen(3000,()=>{
-
     console.log("Server running at port 3000")
 })
