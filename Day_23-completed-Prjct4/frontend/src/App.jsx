@@ -1,34 +1,105 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState,useEffect } from 'react'
+import { io } from "socket.io-client";
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [socket, setSocket] = useState(null)
+  const [messages, setMessages] = useState([
+
+  ])
+  const [inputText, setInputText] = useState('')
+
+  const handleSendMessage = () => {
+    if (inputText.trim() === '') return
+
+    const userMessage = {
+      id: Date.now(),
+      text: inputText,
+      timestamp: new Date().toLocaleTimeString(),
+      sender: 'user'
+    }
+
+    setMessages(prevMessages => [...prevMessages, userMessage])
+    
+    socket.emit('ai-message', inputText)
+
+    
+    setInputText('')
+    
+  }
+
+
+
+  const handleInputChange = (e) => {
+    setInputText(e.target.value)
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage()
+    }
+  }
+
+  useEffect(() => {
+    let socketInstance = io("http://localhost:3000"); 
+    setSocket(socketInstance)
+
+    socketInstance.on('ai-message-response', (response) => {
+
+      const botMessage = {
+        id: Date.now() + 1,
+        text: response,
+        timestamp: new Date().toLocaleTimeString(),
+        sender: 'bot'
+      }
+
+      setMessages(prevMessages => [...prevMessages, botMessage])
+      
+    })
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="chat-container">
+      <div className="chat-header">
+        <h1> AI Chat Bot.. 🤖 </h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      
+      <div className="chat-messages">
+        {messages.length === 0 ? (
+          <div className="no-messages">
+            <p>Start a conversation...</p>
+          </div>
+        ) : (
+          messages.map((message) => (
+            <div key={message.id} className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}>
+              <div className="message-content">
+                <span className="message-text">{message.text}</span>
+                <span className="message-timestamp">{message.timestamp}</span>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      <div className="chat-input">
+        <input
+          type="text"
+          value={inputText}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
+          placeholder="Type your message..."
+          className="input-field"
+        />
+        <button 
+          onClick={handleSendMessage}
+          className="send-button"
+          disabled={inputText.trim() === ''}
+        >
+          Send
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      
+    </div>
   )
 }
 
