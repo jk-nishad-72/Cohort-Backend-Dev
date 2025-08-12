@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
+  <link rel="stylesheet" href="/register.css"/>
+</head>
+<body>
+  <form accept="" method="POST" action="auth/register">
+    <h2>Create Account</h2>
+
+    <div class="input-group">
+      <label for="email">Email</label>
+
+      <input type="email" id="email" required>
+    </div>
+
+    <div class="input-group">
+      <label for="username">Username</label>
+
+      <input type="text" id="username" required>
+    </div>
+
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password"  id="password"  required>
+    </div>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <!-- Theme Toggle -->
+  <button id="theme-toggle"
+   style="position: fixed; top: 1rem; 
+   right: 1rem; padding: 0.5rem 1rem; 
+   border: none; border-radius: var(--radius);
+    background: var(--accent-color); color: white;
+     cursor: pointer; width: 3rem;
+     ">
+    🌙
+  </button>
+
+  <script src="/script.js"></script>
+</body>
+</html>

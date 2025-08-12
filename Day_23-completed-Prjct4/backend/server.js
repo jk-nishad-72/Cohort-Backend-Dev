@@ -12,19 +12,10 @@ const io = new Server(httpServer, {
         origin: "http://localhost:5173", // Adjust 
     }
 });
-
-
 //* implementing short term memory jo chatHistory hai 
-
-
 const chatHistory = [];
-
 io.on("connection", (socket) => {
-  
-
-
     console.log('A new User Connected')
-    
     socket.on('disconnected',()=>{
         console.log("A user disconnected")
     })
