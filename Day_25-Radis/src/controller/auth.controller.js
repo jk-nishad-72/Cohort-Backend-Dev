@@ -52,6 +52,57 @@ async function postRegisterpage(req,res){
 }
 
 
+async function getLogincontroller(req,res){
+
+
+   res.render('login')
+}
+
+async function postLogincontroller(req,res){
+
+   const {email,password}= req.body;
+    const user = await authModel.findOne({
+
+        $or:[
+         {email:email},
+         {username:email}
+        ]
+       
+    })
+
+    if(!user){
+      res.status(401).json({
+         Message:"User not found or invvalid candidate"
+      })
+
+      
+    }
+
+    const isPasswordMatch = await bcrypt.compare(password,user.password)
+
+
+      if(!isPasswordMatch){
+         res.status(401).json({
+            Messae:"Invalid Password ❌"
+         })
+      }
+      const token = jwt.sign({id:user._id},process.env.JWT_SECRET_KEY)
+      res.cookie('token',token)
+      res.status(200).json({
+         Message:"Login successfully 🎉",
+         // User:user,
+         // token:token
+      })
+   // res.json({
+   //    message:"Login controller",
+   //    email,
+   //    password,
+   // })
+
+}
+
+
+
 
 
 
@@ -59,7 +110,9 @@ async function postRegisterpage(req,res){
 module.exports={
 
     getRegisterpage,
-    postRegisterpage
+    postRegisterpage,
+    getLogincontroller,
+    postLogincontroller,
 
 }
 
