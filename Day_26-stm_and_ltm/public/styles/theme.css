@@ -1,0 +1,17 @@
+:root {
+  /* Light theme */
+  --bg-color: #f9f9f9;
+  --primary-color: #1a1a1a;
+  --accent-color: #4a90e2;
+  --border-color: #ddd;
+  --font-family: 'Inter', sans-serif;
+  --radius: 8px;
+  --spacing: 1rem;
+}
+
+.dark-theme {
+  --bg-color: #121212;
+  --primary-color: #ffffff;
+  --accent-color: #4a90e2;
+  --border-color: #333;
+}

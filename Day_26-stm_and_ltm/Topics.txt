@@ -1,0 +1,12 @@
+Backend Development Day_25 
+
+
+study and rivision 
+
+*) create home page protected using middlwares 
+*)  create connection view me cdn ka use and Backend me express socket.io ka 
+*) ai ko real time integrate karao
+
+
+
+

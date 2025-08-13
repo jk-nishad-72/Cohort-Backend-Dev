@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="/index.css" />
+</head>
+<body>
+    <div class="app">
+        <!-- Menu Button -->
+        <button id="menuBtn" class="menu-btn">
+            <span class="menu-icon">☰</span>
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Chats</h2>
+                <button id="closeSidebar" class="close-btn">×</button>
+            </div>
+            <ul class="chat-list">
+                <li>New Chat</li>
+                <li>Previous Chat 1</li>
+                <li>Previous Chat 2</li>
+            </ul>
+            <button id="themeToggle">Toggle Theme</button>
+        </aside>
+
+        <!-- Chat Area -->
+        <main class="chat-area">
+            <div class="messages">
+                <p class="system">Ready when you are.</p>
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="Ask anything" />
+                <button>Send</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="/chat.js"></script>
+</body>
+</html>
