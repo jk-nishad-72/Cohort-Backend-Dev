@@ -6,8 +6,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
 //* regiseter controller 
-
-
 async function  postRegisterController(req,res) {
 
      const { fullname:{firstname,lastname},email,password}  = req.body;
@@ -49,9 +47,48 @@ const token = jwt.sign({id:newUser._id},process.env.JWT_SECRET_KEY)
     
 }
 
+//* login controller 
+
+async function postLoginController(req,res) {
+
+      
+     const {email,password} = req.body;
+
+     const userExist = await authModel.findOne({email:email});
+
+     if(!userExist){
+        return res.status(409).json({
+            Message:"User not found"
+        })
+     }
+
+     const isPasswordMatch = await bcrypt.compare(password,userExist.password)
+
+     if(!isPasswordMatch){
+
+        return res.status(409).json({
+            Message:"Password Invalid"
+        })
+     }
+
+     //* Create JWT Token
+
+     const token = jwt.sign({id:userExist._id},process.env.JWT_SECRET_KEY)
+
+     res.cookie('token',token)
+
+
+     res.status(200).json({
+        Message:" User Logged in SuccessfullY ",
+        User:userExist
+     })
+
+}
+
 
 module.exports = {
 
     postRegisterController,
-    
+    postLoginController
+
 }
