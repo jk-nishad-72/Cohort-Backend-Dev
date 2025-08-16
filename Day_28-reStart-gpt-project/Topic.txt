@@ -1,0 +1,18 @@
+
+
+28 day backend  date:15/08/25
+
+reStart the gpt project with 
+frontend with react 
+backend with express
+websocket with socket.io 
+
+today i completed   the backend part 
+
+registration feater 
+login feater 
+chat collection (chat history ) store on db 
+in backend  implement socket.io 
+
+
+

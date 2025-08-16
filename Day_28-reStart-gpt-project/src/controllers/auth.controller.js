@@ -48,7 +48,6 @@ const token = jwt.sign({id:newUser._id},process.env.JWT_SECRET_KEY)
 }
 
 //* login controller 
-
 async function postLoginController(req,res) {
 
       
@@ -84,6 +83,8 @@ async function postLoginController(req,res) {
      })
 
 }
+
+
 
 
 module.exports = {
