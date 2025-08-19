@@ -1,0 +1,12 @@
+
+#️⃣🚀💚DaY_31 Backend Development 
+with Sheryians Coding School
+Harsh Vandana Sharma
+Ankur Prajapati
+Satwik Raj
+✅Today I explore How to implement Vectors Database on Backend Development .
+✅This NOt very simple this very time taking process 
+✅To implement Vectors db I use Pinecone Vector Database 
+✅Set up of Vector db 
+🧡 Implement Long term memory 
+ 
