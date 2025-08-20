@@ -17,8 +17,6 @@ const ChatsSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true,
-
-
     },
     lastActivity:{
         type:Date,
@@ -28,6 +26,6 @@ const ChatsSchema = new mongoose.Schema({
 
 },{timestamps:true})
 
-const chatsModel = new mongoose.model("Chats",ChatsSchema)
+const chatsModel = mongoose.model("Chats",ChatsSchema)
 
 module.exports = chatsModel
