@@ -15,6 +15,6 @@ app.use(cookieParser());
 
 
 app.use('/api/auth',userAuthRouter);
-app.use('/api/chats',chatRouter)
+app.use('/api/chats',chatRouter);
 
 module.exports = app;
