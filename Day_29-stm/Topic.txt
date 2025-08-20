@@ -17,7 +17,7 @@ That's we need our Logic to Implementing this feature jisse ek AI_CHAT_BOT🤖 h
 
 ✅ Today I completed ther Short term memory feature 
 
-
+and socket connection ke time authentication mean connection se pahle check karega ki valid user hai ya nahi
 
 
 
