@@ -67,6 +67,7 @@ io.on("connection", (socket) => {
 
 
             // * long term memory 
+
             const memory = await queryMemory({
                 queryVector:vectorData,
                 limit:5,
@@ -77,16 +78,34 @@ io.on("connection", (socket) => {
 
 
 
-            const chatHistory = await messageModel.find({
+            const chatHistory = (await messageModel.find({
                 chat:messagePaload.chat,
-            })
+            }).sort({ createdAt: -1 }).limit(5).lean()).reverse()
 
-             const response = await generateResponse(chatHistory.map(item=>{
+
+
+         const stm =   chatHistory.map(item=>{
                 return {
                     role:item.role,
                     parts:[{text:item.content}]
                 }
-             }))
+             })
+
+             const ltm = [
+                {
+                    role:'user',
+                    parts:[{text:`
+
+                          these are some previous messages from the chat, use them to generate a response
+                          ${memory.map(item=>item.metadata.text).join('\n') }
+                        `}]
+                    }
+             ]
+
+             console.log(ltm[0])
+             console.log(stm)
+
+             const response = await generateResponse([...ltm,...stm])
 
 
              // response ko mongodb me store kiya for stm 
