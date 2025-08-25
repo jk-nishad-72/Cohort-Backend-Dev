@@ -44,6 +44,9 @@
   min-height: 400px;
   max-height: calc(100vh - 300px);
 }
+.messages-container::-webkit-scrollbar{
+  display: none;
+}
 
 /* Message Styles */
 .message {

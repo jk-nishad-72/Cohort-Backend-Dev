@@ -8,6 +8,7 @@ import NewChatModal from '../components/NewChatModal'
 import WelcomeScreen from '../components/WelcomeScreen'
 import ChatInterface from '../components/ChatInterface'
 import '../styles/Home.css'
+import { io } from "socket.io-client";
 
 const Home = () => {
   const { theme } = useTheme()
@@ -23,13 +24,51 @@ const Home = () => {
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+   const [socket, setSocket] = useState(null)
 
   const currentChat = previousChats.find((c) => c.id === activeChatId) || null
   const currentMessages = currentChat?.messages || []
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [currentMessages.length, activeChatId])
+  
+    const tempSocket = io('http://localhost:3001', {
+      withCredentials: true
+    })
+  
+    // 🔥 Listen for AI response
+    tempSocket.on('ai-response', (messagePayload) => {
+      // console.log("AI Response received:", messagePayload)
+  
+      const aiMsg = {
+        id: messagePayload.chat,
+        role: 'model',
+        text: messagePayload.response, // 👈 backend se aaya content
+        time: new Date().toLocaleTimeString()
+      }
+  
+      setPreviousChats((prev) =>
+        prev.map((chat) => {
+          if (chat.id !== activeChatId) return chat
+          return {
+            ...chat,
+            messages: [...(chat.messages || []), aiMsg],
+            last: aiMsg.text
+          }
+        })
+      )
+  
+      setIsTyping(false) // stop typing indicator
+    })
+  
+    setSocket(tempSocket)
+  
+    return () => {
+      tempSocket.disconnect()
+    }
+  }, [activeChatId])
+  
+
 
   // Create new chat in backend
   const createChatInBackend = async (title) => {
@@ -70,70 +109,72 @@ const Home = () => {
     }
   }
 
+
   const sendMessage = async (e) => {
     if (e) e.preventDefault()
     const text = input.trim()
     if (!text) return
-
-    // If no active chat, create a new one first
+  
+    // If no active chat → create new one first
     if (!activeChatId) {
       const title = text.length > 20 ? text.slice(0, 20) + '...' : text
       await createChatInBackend(title)
     }
-
-    const userMsg = { id: Date.now(), role: 'user', text, time: new Date().toLocaleTimeString() }
-    setInput('')
-
-    // Add user message to chat
-    setPreviousChats((prev) => prev.map((chat) => {
-      if (chat.id !== (activeChatId || prev[0]?.id)) return chat
-      return { 
-        ...chat, 
-        messages: [...(chat.messages || []), userMsg], 
-        last: userMsg.text 
-      }
-    }))
-
-    // Show typing indicator
-    setIsTyping(true)
-
-    // Simulate AI response (replace with actual API call)
-    setTimeout(async () => {
-      const aiResponse = await generateAIResponse(text)
-      
-      setPreviousChats((prev) => prev.map((chat) => {
-        if (chat.id !== (activeChatId || prev[0]?.id)) return chat
-        return { 
-          ...chat, 
-          messages: [...(chat.messages || []), aiResponse], 
-          last: aiResponse.text 
-        }
-      }))
-      
-      setIsTyping(false)
-    }, 1000 + Math.random() * 1000) // Random delay between 1-2 seconds
-  }
-
-  const generateAIResponse = async (userMessage) => {
-    // This is a mock AI response generator
-    // Replace this with actual API calls to your AI service
-    const responses = [
-      `I understand you're asking about "${userMessage}". That's an interesting topic!`,
-      `Great question! "${userMessage}" is something I can help you with.`,
-      `Regarding "${userMessage}", I'd be happy to provide some insights.`,
-      `"${userMessage}" - that's a fascinating subject. Let me share what I know.`,
-      `I appreciate you asking about "${userMessage}". Here's what I can tell you.`
-    ]
-    
-    const randomResponse = responses[Math.floor(Math.random() * responses.length)]
-    
-    return {
+  
+    // Emit user message to backend via socket
+    socket.emit('ai-message', {
+      chat: activeChatId,
+      content: text
+    })
+  
+    // Add user message locally
+    const userMsg = {
       id: Date.now(),
-      role: 'ai',
-      text: randomResponse,
+      role: 'user',
+      text,
       time: new Date().toLocaleTimeString()
     }
+  
+    setInput('')
+    setPreviousChats((prev) =>
+      prev.map((chat) => {
+        if (chat.id !== (activeChatId || prev[0]?.id)) return chat
+        return {
+          ...chat,
+          messages: [...(chat.messages || []), userMsg],
+          last: userMsg.text
+        }
+      })
+    )
+  
+    // Show typing indicator until AI response arrives
+    setIsTyping(true)
   }
+  
+
+
+  // const generateAIResponse = async (userMessage) => {
+    
+  //   // This is a mock AI response generator
+  //   // Replace this with actual API calls to your AI service
+  //   const responses = [
+  //     `I understand you're asking about "${userMessage}". That's an interesting topic!`,
+  //     `Great question! "${userMessage}" is something I can help you with.`,
+  //     `Regarding "${userMessage}", I'd be happy to provide some insights.`,
+  //     `"${userMessage}" - that's a fascinating subject. Let me share what I know.`,
+  //     `I appreciate you asking about "${userMessage}". Here's what I can tell you.`
+  //   ]
+    
+  //   const randomResponse = responses[Math.floor(Math.random() * responses.length)]
+    
+  //   return {
+  //     id: Date.now(),
+  //     role: 'ai',
+  //     text: randomResponse,
+  //     time: new Date().toLocaleTimeString()
+  //   }
+  // }
+
 
   const loadPreviousChat = (chat) => {
     if (chat) {

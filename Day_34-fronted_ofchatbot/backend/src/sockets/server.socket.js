@@ -11,7 +11,16 @@ const { text } = require('express')
 
 async function serverSocket(httpServer) {
     
-    const io = new Server(httpServer, { /* options */ });
+    const io = new Server(httpServer, { /* options */ 
+
+        cors: {
+            origin: "http://localhost:5173",
+            allowedHeaders: ["Content-Type", "Authorization"],
+            credentials: true
+        }
+    });
+
+
 
 
     io.use(async(socket,next)=>{
@@ -44,7 +53,7 @@ async function serverSocket(httpServer) {
 
     io.on("connection", (socket) => {
 
-        //  console.log("new connection ",socket.id)
+         console.log("new connection ",socket.id)
 
         socket.on('ai-message',async(messagePaload)=>{
 
@@ -132,6 +141,7 @@ async function serverSocket(httpServer) {
             ]
 
             const response = await generateResponse([...ltm,...stm])
+            
             //   const response = await generateResponse(messagePaload.content)
 
             
@@ -150,6 +160,7 @@ async function serverSocket(httpServer) {
 
        */
             socket.emit('ai-response',{
+
                     chat:messagePaload.chat,
                     response:response
                 
