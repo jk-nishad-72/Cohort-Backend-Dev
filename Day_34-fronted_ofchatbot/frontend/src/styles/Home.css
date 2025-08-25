@@ -1,0 +1,50 @@
+/* Core Layout Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Main Chat Area */
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--bg);
+  min-height: calc(100vh - 72px);
+  transition: background-color 0.3s ease;
+}
+
+/* Desktop Responsiveness */
+@media (min-width: 768px) {
+  .home-container {
+    flex-direction: row;
+  }
+  
+  .chat-area {
+    min-height: 100vh;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+}
