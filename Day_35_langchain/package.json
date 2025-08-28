@@ -8,8 +8,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "module",
   "description": "",
   "dependencies": {
-    "@langchain/google-genai": "^0.2.16"
+    "@langchain/core": "^0.3.72",
+    "@langchain/google-genai": "^0.2.16",
+    "dotenv": "^17.2.1"
   }
 }
