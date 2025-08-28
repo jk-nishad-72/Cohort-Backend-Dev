@@ -1,6 +1,8 @@
 import { config } from "dotenv";
 
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { PromptTemplate } from "@langchain/core/prompts";
+import { response } from "express";
 
 
 config()
@@ -13,9 +15,25 @@ const model =new ChatGoogleGenerativeAI({
 })
 
 
-model.invoke('hello ai who are you').then((response) => {
-    console.log(response.content);
+const prompt = PromptTemplate.fromTemplate(`
+     explain {topic} in very simple way like ELI5,
+    make sure to include the core concepts and avoid unnecessary jargon.
+    make the answer as concise as possible.
     
-}).catch((err) => {
-    console.log(err)
-});
+    `)
+
+ const chain = prompt.pipe(model)
+
+ chain.invoke({topic :"express"})
+ .then(response =>{
+    console.log(response)
+ }
+ )
+
+
+// model.invoke('hello ai who are you').then((response) => {
+//     console.log(response.content);
+    
+// }).catch((err) => {
+//     console.log(err)
+// });
