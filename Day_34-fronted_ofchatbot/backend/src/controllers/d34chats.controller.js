@@ -1,5 +1,6 @@
 const userAuthModel = require("../models/d34auth.model")
 const chatsModel = require('../models/d34chats.model')
+const msgModel = require('../models/d34msg.model');
 
 
 async function chatContrlloler(req,res) {
@@ -26,6 +27,8 @@ async function chatContrlloler(req,res) {
        })  
 }
 
+
+
 async function getChats(req,res) {
 
   const user = req.user;
@@ -47,10 +50,28 @@ async function getChats(req,res) {
 
   
 }
+
+
+async function getMessages(req,res) {
+
+   
+  const chatId = req.params.id;
+
+  const messages = await msgModel.find({chat:chatId}).sort({createdAt:1});
+
+  res.status(200).json({
+    msg:"messages retrieved successfully",
+    messages
+  })
+
+   
+
+}
  
 
 module.exports = {
     chatContrlloler,
-    getChats
+    getChats,
+    getMessages
                                      
 }

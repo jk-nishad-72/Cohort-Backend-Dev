@@ -177,6 +177,7 @@ const Home = () => {
 
 
   const loadPreviousChat = (chat) => {
+    
     if (chat) {
       setActiveChatId(chat.id)
     }
@@ -219,6 +220,7 @@ const Home = () => {
         openNewChatModal={openNewChatModal}
       />
 
+
       <Sidebar 
         sidebarOpen={sidebarOpen}
         previousChats={previousChats}
@@ -226,6 +228,7 @@ const Home = () => {
         loadPreviousChat={loadPreviousChat}
         openNewChatModal={openNewChatModal}
       />
+
 
       <NewChatModal 
         showNewChatModal={showNewChatModal}
