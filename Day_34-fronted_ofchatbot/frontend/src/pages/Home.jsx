@@ -14,7 +14,6 @@ const Home = () => {
   const { theme } = useTheme()
   const { user } = useAuth()
   const [input, setInput] = useState('')
-  // Remove hardcoded chats - start with empty array
   const [previousChats, setPreviousChats] = useState([])
   const [activeChatId, setActiveChatId] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -24,11 +23,14 @@ const Home = () => {
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
-   const [socket, setSocket] = useState(null)
+  const [socket, setSocket] = useState(null)
 
   const currentChat = previousChats.find((c) => c.id === activeChatId) || null
   const currentMessages = currentChat?.messages || []
 
+  // -------------------------------
+  // SOCKET SETUP
+  // -------------------------------
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   
@@ -36,14 +38,11 @@ const Home = () => {
       withCredentials: true
     })
   
-    // 🔥 Listen for AI response
     tempSocket.on('ai-response', (messagePayload) => {
-      // console.log("AI Response received:", messagePayload)
-  
       const aiMsg = {
         id: messagePayload.chat,
         role: 'model',
-        text: messagePayload.response, // 👈 backend se aaya content
+        text: messagePayload.response,
         time: new Date().toLocaleTimeString()
       }
   
@@ -58,7 +57,7 @@ const Home = () => {
         })
       )
   
-      setIsTyping(false) // stop typing indicator
+      setIsTyping(false)
     })
   
     setSocket(tempSocket)
@@ -69,8 +68,84 @@ const Home = () => {
   }, [activeChatId])
   
 
+  // -------------------------------
+  // STEP 1: FETCH CHATS AFTER LOGIN
+  // -------------------------------
+  useEffect(() => {
+    const fetchChats = async () => {
+      if (!user) return
 
-  // Create new chat in backend
+      try {
+        const res = await axios.get("http://localhost:3001/api/chats", {
+          withCredentials: true,
+        })
+
+        const chats = res.data.chats.map(c => ({
+          id: c._id,
+          title: c.title,
+          last: c.last || c.lastActivity || "",
+          messages: [],   // initially empty, will fetch later
+          backendId: c._id,
+        }))
+
+        setPreviousChats(chats)
+
+        if (chats.length > 0) {
+          // load messages for the most recent chat
+          loadPreviousChat(chats[0])
+        }
+      } catch (err) {
+        console.error("Failed to fetch chats:", err)
+      }
+    }
+
+    fetchChats()
+  }, [user])
+
+
+  // -------------------------------
+  // STEP 2: LOAD MESSAGES OF A CHAT
+  // -------------------------------
+  const loadPreviousChat = async (chat) => {
+    if (!chat) return
+
+    setLoading(true)
+    setActiveChatId(chat.id)
+    setInput('')
+    try {
+      // If this chat was created locally without backend id, skip fetch
+      const res = chat.backendId
+        ? await axios.get(`http://localhost:3001/api/chats/messages/${chat.id}`, { withCredentials: true })
+        : { data: { messages: [] } }
+
+      // Normalize messages shape: { id, role, text, time }
+      const messages = (res.data.messages || []).map((m) => ({
+        id: m.id || m._id,
+        role: m.role || m.role,
+        text: m.text || m.content || '',
+        time: m.time || (m.createdAt ? new Date(m.createdAt).toLocaleTimeString() : '')
+      }))
+
+      setPreviousChats((prev) =>
+        prev.map((c) => (c.id === chat.id ? { ...c, messages } : c))
+      )
+
+      // Give React a beat to render then scroll to bottom
+      setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 60)
+    } catch (err) {
+      console.error('Failed to fetch messages:', err)
+    } finally {
+      setLoading(false)
+      setSidebarOpen(false)
+      setIsTyping(false)
+    }
+  }
+
+
+
+  // -------------------------------
+  // CREATE NEW CHAT
+  // -------------------------------
   const createChatInBackend = async (title) => {
     try {
       setLoading(true)
@@ -85,7 +160,7 @@ const Home = () => {
         title: response.data.chat.title,
         last: '',
         messages: [],
-        backendId: response.data.chat._id // Store backend ID for future reference
+        backendId: response.data.chat._id
       }
       
       setPreviousChats(prev => [newChat, ...prev])
@@ -93,7 +168,6 @@ const Home = () => {
       return newChat
     } catch (error) {
       console.error('Error creating chat:', error)
-      // Fallback to local chat creation if backend fails
       const fallbackChat = {
         id: Date.now(),
         title: title,
@@ -110,24 +184,24 @@ const Home = () => {
   }
 
 
+  // -------------------------------
+  // SEND MESSAGE
+  // -------------------------------
   const sendMessage = async (e) => {
     if (e) e.preventDefault()
     const text = input.trim()
     if (!text) return
   
-    // If no active chat → create new one first
     if (!activeChatId) {
       const title = text.length > 20 ? text.slice(0, 20) + '...' : text
       await createChatInBackend(title)
     }
   
-    // Emit user message to backend via socket
     socket.emit('ai-message', {
       chat: activeChatId,
       content: text
     })
   
-    // Add user message locally
     const userMsg = {
       id: Date.now(),
       role: 'user',
@@ -147,42 +221,9 @@ const Home = () => {
       })
     )
   
-    // Show typing indicator until AI response arrives
     setIsTyping(true)
   }
-  
 
-
-  // const generateAIResponse = async (userMessage) => {
-    
-  //   // This is a mock AI response generator
-  //   // Replace this with actual API calls to your AI service
-  //   const responses = [
-  //     `I understand you're asking about "${userMessage}". That's an interesting topic!`,
-  //     `Great question! "${userMessage}" is something I can help you with.`,
-  //     `Regarding "${userMessage}", I'd be happy to provide some insights.`,
-  //     `"${userMessage}" - that's a fascinating subject. Let me share what I know.`,
-  //     `I appreciate you asking about "${userMessage}". Here's what I can tell you.`
-  //   ]
-    
-  //   const randomResponse = responses[Math.floor(Math.random() * responses.length)]
-    
-  //   return {
-  //     id: Date.now(),
-  //     role: 'ai',
-  //     text: randomResponse,
-  //     time: new Date().toLocaleTimeString()
-  //   }
-  // }
-
-
-  const loadPreviousChat = (chat) => {
-    
-    if (chat) {
-      setActiveChatId(chat.id)
-    }
-    setSidebarOpen(false)
-  }
 
   const openNewChatModal = () => {
     setShowNewChatModal(true)
@@ -220,7 +261,6 @@ const Home = () => {
         openNewChatModal={openNewChatModal}
       />
 
-
       <Sidebar 
         sidebarOpen={sidebarOpen}
         previousChats={previousChats}
@@ -228,7 +268,6 @@ const Home = () => {
         loadPreviousChat={loadPreviousChat}
         openNewChatModal={openNewChatModal}
       />
-
 
       <NewChatModal 
         showNewChatModal={showNewChatModal}
@@ -267,5 +306,3 @@ const Home = () => {
 }
 
 export default Home
-
-
