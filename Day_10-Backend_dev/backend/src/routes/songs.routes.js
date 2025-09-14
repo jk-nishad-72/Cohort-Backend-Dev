@@ -1,9 +1,5 @@
 
-
-
-
 const express = require("express")
-
 const multer = require('multer')
 const uploadFile = require('../service/storage.service')
 const router  = express.Router();
@@ -30,9 +26,9 @@ router.post('/songs',upload.single("audio"),async(req,res)=>{
 
  
    const fileData = await uploadFile(req.file)
-     console.log( req.body)
-   console.log(req.file)
-  console.log(fileData)
+  //    console.log( req.body)
+  //  console.log(req.file)
+  // console.log(fileData)
 
   const song = await songModel.create({
     
@@ -57,13 +53,11 @@ router.get('/songs',async(req,res)=>{
    const songs = await songModel.find({
     mood:mood
    })
-
+   
    res.status(200).json({
     Message:"songs fetched sucessfully🎉",
     songs:songs
    })
-
-
 })
 
 module.exports = router

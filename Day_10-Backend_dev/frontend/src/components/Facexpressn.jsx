@@ -9,12 +9,14 @@ export default function FacialExpression({setSongs}) {
     const videoRef = useRef();
 
     const loadModels = async () => {
+
         const MODEL_URL = '/models';
         await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
         await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
     };
 
     const startVideo = () => {
+        
         navigator.mediaDevices.getUserMedia({ video: true })
             .then((stream) => {
                 videoRef.current.srcObject = stream;
