@@ -8,8 +8,6 @@
    
    rs.send("Server Home page")
 
-
-
  })
 
   app.get('/profile',(r,rs)=>{

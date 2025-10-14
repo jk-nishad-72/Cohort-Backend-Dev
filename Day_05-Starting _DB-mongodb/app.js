@@ -4,6 +4,8 @@ const express = require("express")
 const app = express();
 
 
+connectTodb()
+
 app.get('/',(req,res)=>{
     res.send("Server Home Page")
 
@@ -12,6 +14,5 @@ app.get('/',(req,res)=>{
 app.listen(3000,()=>{
 
     console.log("Server run o Port http://localhost:3000")
-    connectTodb()
 
 })
