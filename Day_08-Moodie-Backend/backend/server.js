@@ -6,9 +6,7 @@ const connetTodb = require('./src/DB/db')
 connetTodb()
 
 app.get("/",(req,res)=>{
-
     res.send("Welcome to server")
-
 })
 
 app.listen(3000,()=>{
@@ -16,3 +14,4 @@ app.listen(3000,()=>{
     console.log("Srvr running at Port http://localhost:3000")
 
 })
+
