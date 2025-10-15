@@ -17,10 +17,8 @@ var imagekit = new ImageKit({
 function uploadFile(file){
     return new Promise((resolve,reject)=>{
          imagekit.upload({
-
             file:file.buffer,
             fileName:"hello-cohort"
-
          },(error,result)=>{
             if(error){
                 reject(error);
