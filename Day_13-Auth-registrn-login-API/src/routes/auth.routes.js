@@ -31,13 +31,17 @@ router.post('/login',async(req,res)=>{
     }
 
     const isPasswordCorrect = password === isuserExist.password;
+    
     if(!isPasswordCorrect){
         return res.status(401).json({Message:"Invalid password"});
     }
+
     res.status(200).json({
         Message:"Login successful",
     })
 })
+
+
 router.get('/user',(req,res)=>{
     res.json({
         Message:"Welcome the user page "
