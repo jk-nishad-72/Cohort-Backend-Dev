@@ -7,6 +7,7 @@ const userauthRouter = express.Router()
 
 // * register api 
 userauthRouter.post('/register',async(req,res)=>{
+
      const {username,password} = req.body
        if(!username){
         return res.status(409).json({
@@ -17,36 +18,44 @@ userauthRouter.post('/register',async(req,res)=>{
             username:username,
             password:password
            })
-        const token =  jwt.sign({id:newuserauth._id},process.env.JWT_SECRET)
+
+        const token =  jwt.sign({id:newuserauth._id},process.env.JWT_SECRET) 
       
        res.cookie("token",token)
 
         res.status(201).json({
-            Message:" Register sucessfully "
-
+            Message:" Register sucessfully ",
+            token:token
         })
 })
 
 
 
 //* user get api [protected]
+
 userauthRouter.get('/user',async(req,res)=>{
       
     // console.log("All cookies:", req.cookies); 
+
      const token = req.cookies.token;
-     console.log(token)
-     if(!token){
+    //  console.log(token)
+
+
+     if(!token){ 
         return res.status(409).json({
-            Message:"Invalid token "
+            Message:" Invalid token "
         })
      }
      try{
-      const decode=  jwt.verify(token,process.env.JWT_SECRET)
 
-      console.log(decode)
+      const decode =  jwt.verify(token,process.env.JWT_SECRET)
+
+    //   console.log(decode.id)
 
    const user = await userauthModel.findById(decode.id);
 
+    // console.log(user);
+    
       res.status(200).json({
         Message:" profile ",
         user:user
@@ -59,6 +68,8 @@ userauthRouter.get('/user',async(req,res)=>{
      }
      
 })
+
+
 
 //* login api  and creating a new token 
 
@@ -100,6 +111,8 @@ userauthRouter.post('/login',async(req,res)=>{
   const token =      jwt.sign({id:userExist._id} , process.env.JWT_SECRET)
 
   res.cookie('token',token)
+  console.log(token);
+  
 
   res.status(200).json({
     Message:"login sucessfuly"

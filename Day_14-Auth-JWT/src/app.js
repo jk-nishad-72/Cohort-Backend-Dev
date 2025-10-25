@@ -11,7 +11,13 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser());
 
-app.use('/auth',userauthRouter)
+app.use('/auth',userauthRouter) 
+
+// app.get('/' ,(req,res)=>{
+//      res.json({
+//         Message:" Welcome to server 🙏 "
+//      })
+// })
 
 
 

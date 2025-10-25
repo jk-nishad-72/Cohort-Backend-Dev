@@ -7,6 +7,6 @@
 
  1. what is JWT nad JWT package why use it and how use it ✅
  2. How to  generate token  using  JWT secrete key  ✅
- 3. user Authentication registration and login  ✅
+ 3. user Authentication registration and login  ✅  
 
 
