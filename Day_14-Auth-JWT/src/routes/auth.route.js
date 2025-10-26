@@ -9,6 +9,7 @@ const userauthRouter = express.Router()
 userauthRouter.post('/register',async(req,res)=>{
 
      const {username,password} = req.body
+
        if(!username){
         return res.status(409).json({
             Message:" Invalid Username",
@@ -49,6 +50,8 @@ userauthRouter.get('/user',async(req,res)=>{
      try{
 
       const decode =  jwt.verify(token,process.env.JWT_SECRET)
+
+      
 
     //   console.log(decode.id)
 
@@ -108,6 +111,7 @@ userauthRouter.post('/login',async(req,res)=>{
      }
 
       // * create new token during login
+      
   const token =      jwt.sign({id:userExist._id} , process.env.JWT_SECRET)
 
   res.cookie('token',token)

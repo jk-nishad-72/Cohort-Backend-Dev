@@ -5,8 +5,9 @@
  Topics : - 
 
 
- 1. what is JWT nad JWT package why use it and how use it ✅
- 2. How to  generate token  using  JWT secrete key  ✅
+ 1. what is JWT nad JWT package why use it and how use it ✅ (need install package jsonwebtoken)
+ 2. How to  generate token  using  JWT secrete key  ✅  
  3. user Authentication registration and login  ✅  
 
+note :- for (set token in cookie need to install package cookie-parser)
 
