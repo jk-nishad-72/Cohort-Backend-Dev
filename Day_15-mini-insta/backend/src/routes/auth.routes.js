@@ -8,14 +8,15 @@ var jwt = require('jsonwebtoken');
 
 
 
-router.get('/',(req,res)=>{
+// router.get('/',(req,res)=>{
 
-   res.send("hello ")
+//    res.send("hello ")
 
-})
+// })
 
 
 //* register API :- 
+
 router.post('/register',async(req,res)=>{
 
     const {username,password} = req.body
@@ -91,13 +92,61 @@ router.post('/login',async(req,res)=>{
       })
    }
 
-    //* Now sab sahi hai token create and login
+    //* Now sab sahi hai token create and login 
+
     const token = jwt.sign({id:username._id},process.env.JWT_SECRET)
     res.cookie('token',token)
     res.status(200).json({
       Message:"login sucessfully"
     })
 })
+
+router.get('/user',async(req,res)=>{
+
+   //  console.log(" all cookies " + req.cookies);  
+    
+
+     const token = req.cookies.token;
+
+   //   console.log(token);
+  
+     
+
+
+     if(!token){
+
+          res.status(200).json({
+            Message: " Unautherized "
+          })
+     }
+
+   try{
+        const decode =  jwt.verify(token,process.env.JWT_SECRET)
+
+     
+        const UserDetail = await userModel.findById(decode.id)
+   //   console.log(decode);
+   //      res.json({
+   //    token: token,
+   //    decode:decode
+   //   })
+
+   res.status(200).json({
+      Message:"User Profile ",
+      User: UserDetail
+   })
+   }catch(error){
+
+      res.status(401).json({
+         Message:"error " + error
+      })
+   }
+     
+
+})
+
+
+
 
 
 

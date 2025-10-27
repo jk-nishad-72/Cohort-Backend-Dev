@@ -9,6 +9,6 @@ require('dotenv').config()
 
 app.use(express.json())
 app.use(cookieParser())
-app.use('/auth',router)
+app.use('/api/auth',router) 
 
 module.exports =app
