@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 
 
 //* Register Controller
-async function registerController(req, res) {
+async function registerController(req, res) { 
     const { username, password } = req.body;
 
     // Check if user already exists

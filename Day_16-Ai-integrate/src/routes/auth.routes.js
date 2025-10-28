@@ -16,6 +16,7 @@ const router = express.Router()
  */
 
  //** */ register feature POST  API :-
+
 router.post('/register',async(req,res)=>{
        const {username , password} = req.body;
        // cheking for name ya khali hai 
@@ -48,7 +49,7 @@ router.post('/register',async(req,res)=>{
         })
 })
 
- // ✅ login  feature  POST API :- 
+ //* ✅ login  feature  POST API :- 
 
  router.post('/login',async(req,res)=>{
 
@@ -138,7 +139,6 @@ router.post('/register',async(req,res)=>{
 
 
      res.status(200).json({
-
         Message:"Log out sucessfully"
 
      })

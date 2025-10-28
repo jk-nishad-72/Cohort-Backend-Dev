@@ -7,7 +7,7 @@
  1.Validation  
  2.Verification
  3.Autherization
- 4.Authentication 
+ 4.Authentication  
 
 
  // Authentication APIs

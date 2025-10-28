@@ -4,7 +4,8 @@ const mongoose = require("mongoose")
 
 
 function conectTodb(){
-    mongoose.connect(process.env.MONGODB_URL)
+    
+    mongoose.connect(process.env.MONGODB_URL) 
     .then(()=>{
         console.log("DB Connected")
     })
@@ -13,4 +14,4 @@ function conectTodb(){
     })
 }
 
-module.exports = conectTodb
+module.exports = conectTodb 

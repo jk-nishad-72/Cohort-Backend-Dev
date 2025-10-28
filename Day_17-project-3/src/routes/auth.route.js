@@ -8,9 +8,10 @@ const {registerController,loginController} = require('../controllers/auth.contro
 const router = express.Router()
 
 
-
-router.post('/register',registerController)
-router.post('/login',loginController)
+router.post('/user',loginController) 
+router.post('/register',registerController) 
+router.post('/login',loginController) 
+router.post('/logout',loginController) 
 
 
 module.exports = router
