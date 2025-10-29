@@ -1,6 +1,7 @@
 const usersModel = require("../models/users.model");
 const jwt = require("jsonwebtoken");
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const e = require("express");
 
 
 //* Register Controller
@@ -64,7 +65,58 @@ const isMatchPassword = await bcrypt.compare(password,user.password)
     });
 }
 
+//* User profile 
+
+async function  uProfileController(req,res) {
+
+        // console.log('all cookies ' + req.cookies)
+
+        const token = req.cookies.token;
+
+        if(!token){
+             res.status(401).json({
+                Message:" Unautherised " 
+             })
+        }
+
+         try{
+
+               const decode =  jwt.verify(token,process.env.JWT_SECRET) 
+               const UserDetail = await usersModel.findById(decode.id)
+                res.status(200).json({
+                    Message:" User Profile ",
+                    User:UserDetail
+                })
+                
+              
+         }catch(error){
+
+             res.status(401).json({
+                    Message:" Error  " + error,
+                })
+         }
+
+    
+}
+
+//* logout feature 
+
+async function logoutController(req,res) {
+
+      res.clearCookie('token')
+
+      res.status(200).json({
+        Message:"logout Succesfully  "
+      })
+    
+
+       
+
+}
+
 module.exports = {
     registerController,
-    loginController
+    loginController,
+    uProfileController,
+    logoutController
 };
