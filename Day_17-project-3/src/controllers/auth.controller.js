@@ -53,6 +53,12 @@ async function loginController(req, res) {
 
 const isMatchPassword = await bcrypt.compare(password,user.password) 
 
+   if(!isMatchPassword){
+    res.status(401).json({
+        Message:" Incorrect Password "
+    })
+   }
+
     // Generate token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 

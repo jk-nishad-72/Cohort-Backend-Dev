@@ -16,4 +16,4 @@ const d17prcauthSchema = mongoose.Schema({
 
 const d17PrcAuthModel = mongoose.model('d17PrcAuthModel',d17prcauthSchema)
 
-module.exports = d17PrcAuthModel
+module.exports = d17PrcAuthModel 
