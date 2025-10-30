@@ -82,17 +82,39 @@ async function loginController(req,res) {
 
     
 }
+
 async function userController(req,res) {
 
+      const token = req.cookies.token;
+
+      if(!token){
+         res.status(401).json({
+            Message:" Unautherised  "
+         })
+         }
+       const decode  = jwt.verify(token,process.env.JWT_SECRET)  
+       const UserDetail = await authsModel.findById(decode.id)
+       res.status(200).json({
+        Message:" User Profile 🙅‍♀️ ",
+        user:UserDetail
+       })
  
-    
+}
+
+async function logoutController(req,res) {
+
+     res.clearCookie('token')
+
+     res.status(400).json({
+        Message:" Logout SucessFully ✅ "
+     })    
 }
 
 
 
 
 module.exports = {
-    registerController , loginController,userController
+    registerController , loginController,userController,logoutController
 }
 
 

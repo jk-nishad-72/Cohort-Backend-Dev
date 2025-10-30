@@ -1,2 +1,11 @@
 
+#Day18: 
+
+// Project Post Image with Ai caption 
+
+Creating Post Schema and model 
+Creating Post Api 
+Creating Post API PROTECTED  Creating authentication Middleware (new Folder Structure Middlewares ) 
+
+
 
