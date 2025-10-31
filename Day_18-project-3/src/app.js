@@ -10,8 +10,8 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use('/api/auth',authRoutes)
-//*instagram post feature ki trh 
-app.use('/api/post',postRoutes)
+//*instagram post feature ki trh  
+app.use('/api/post',postRoutes) 
 
 
 

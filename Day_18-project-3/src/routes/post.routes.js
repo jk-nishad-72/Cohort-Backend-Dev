@@ -10,15 +10,16 @@ const postModel =  require('../models/post.model')
 const {createPostController} = require('../controllers/createpost.controller')
 
 
-const upload = multer({storage:multer.memoryStorage()})
+const upload = multer({storage:multer.memoryStorage()})  
+
 
 //* protected api 
 
 // /api/post [protected ] {image-file}
 postRoutes.post('/', 
     authMiddlware ,
-    upload.single("image"),
-    createPostController
-)
+    upload.single("image"), 
+    createPostController 
+) 
 
 module.exports = postRoutes
