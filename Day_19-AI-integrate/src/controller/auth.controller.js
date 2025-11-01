@@ -79,9 +79,38 @@ async function loginController(req,res) {
        })
 }
 
+async function UserController(req,res) {
+
+   const token = req.cookies.token;
+
+   if(!token){
+      res.status(401).json({
+         Message:" Uautherised "
+      })
+   }
+
+   const decode = jwt.verify(token,process.env.JWT_SECRET)
+
+
+   const user =  await authsModel.findById(decode.id)
+
+   res.status(200).json({
+      Message: " user Profile  🙅‍♀️ ",
+      User:user
+   })
+   
+}
+
+async function logoutController(req,res) {
+   res.clearCookie('token')
+   res.status(200).json({
+      Message:" Logout Successfully 🎉✅ "
+   })
+}
+
 
 
 
 module.exports = {
-     registerController,loginController
+     registerController,loginController , UserController ,logoutController
 }
