@@ -32,7 +32,7 @@ const post = await postModel.create({
 
 res.status(201).json({
         message: "Post created successfully",
-        post
+        post:post
     })
      
     

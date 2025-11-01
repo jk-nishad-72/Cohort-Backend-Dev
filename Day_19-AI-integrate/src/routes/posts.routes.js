@@ -10,9 +10,11 @@ const multer = require('multer')
 
   const upload = multer({storage:multer.memoryStorage()})
 postsRouter.post('/',
-    postsMiddleware,
+   postsMiddleware,
    upload.single('image'),
-    postscontroller)
+   postscontroller 
+  
+  )
 
 
 
