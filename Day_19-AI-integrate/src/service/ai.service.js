@@ -33,4 +33,4 @@ async function generateCaption(base64ImageFile) {
 }
 
 
-module.exports = generateCaption
+module.exports = generateCaption 

@@ -24,6 +24,7 @@ const base64ImageFile = new Buffer.from(file.buffer).toString('base64');
 /*  const caption = await generateCaption(base64Image);
      const result = await uploadFile(file.buffer, `${uuidv4()}`); */
 const result = await uploadImageInImagekit(file.buffer,`${uuidv4()}`)
+
 const post = await postModel.create({
         caption: caption,
         image: result.url,

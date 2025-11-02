@@ -12,6 +12,7 @@ async  function  postsMiddleware(req,res,next){
             Msg:'Unautherised'
         })
       }
+      
       try{
         
        const decode =     jwt.verify(token,process.env.JWT_SECRET)

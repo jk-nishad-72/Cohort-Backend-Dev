@@ -6,6 +6,7 @@ require('dotenv').config();
 const connectedToDB  = require('./src/DB/db')
 const authRouter = require('./src/routes/auth.routes') 
 const cookieParser = require('cookie-parser')
+const d19postRouter  = require('./src/routes/d19Post.routes')
 
 
 connectedToDB() 
@@ -15,6 +16,7 @@ app.use(cookieParser())
 
 
 app.use('/api/auth',authRouter)
+app.use('/api/post',d19postRouter)
 
 
 
