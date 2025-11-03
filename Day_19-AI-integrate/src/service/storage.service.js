@@ -3,7 +3,7 @@
 
 // or
 var ImageKit = require("imagekit");
-const { model } = require("mongoose");
+
 
 var imagekit = new ImageKit({
     publicKey : process.env.IMAGEKIT_PUBLIC_URL,

@@ -6,6 +6,7 @@ const ai = new GoogleGenAI({});
 
 
 async function generateCaption(base64ImageFile) {
+
     const contents = [
         {
             inlineData: {
@@ -30,6 +31,7 @@ async function generateCaption(base64ImageFile) {
     });
 
     return response.text
+    
 }
 
 
