@@ -9,24 +9,36 @@ async function postController(req,res) {
 
     const file = req.file
 
+    //  console.log(req.user); 
+     
 
      const base64Imagefile = new Buffer.from(file.buffer).toString('base64') 
 
      const  caption = await generateCaption(base64Imagefile)  
 
-      // const result = await uploadImageInImagekit(file.buffer,`${uuidv4()}`) 
+     
 
     // console.log(file); 
     // res.send(file)
  
-     console.log(caption )
+    //  console.log(caption);
   
-    //  const result = await generateCaption(base64Imagefile,`${uuidv4()}`) 
-
+     const result = await uploadImageInImagekit(base64Imagefile,`${uuidv4()}`) 
+ 
+      // console.log(result.url);
+      
+      const newPost = await d20pracPostModel.create({
+            image:result.url,
+            caption:caption,
+            user:req.user._id,
+            
+          
+      })
     
 
-    res.status(200).json({
-      Msg:caption
+    res.status(201).json({
+      Msg:'Post created successfully',
+      Post:newPost
     })
     
 }

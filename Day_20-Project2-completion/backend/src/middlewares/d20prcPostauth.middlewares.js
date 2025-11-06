@@ -15,7 +15,7 @@ async function postMiddlewares(req,res,next) {
      try{
          const decode = jwt.verify(token,process.env.JWT_SECRET)
          const user = await d20pracAuthModel.findById(decode.id)
-         res.user = user;
+         req.user =user; 
          next()
 
      }catch(error){

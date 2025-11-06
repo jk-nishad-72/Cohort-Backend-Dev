@@ -1,26 +1,23 @@
-const ImageKit = require('@imagekit/nodejs');
-const { Folders } = require('@imagekit/nodejs/resources/index.js');
+const Imagekit = require("imagekit");
 
-
-
-const imagekit = new ImageKit({
-    publicKey : process.env.IMAGEKIT_PUBLIC_URL,
-    privateKey : process.env.IMAGEKIT_PRIVATE_URL,
-    urlEndpoint : process.env.IMAGEKIT_URL_ENDPOINT,
+const imagekit = new Imagekit({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.URL_ENDPOINT,
 });
 
+async function uploadImageInImagekit(fileBuffer, fileName) {
+  try {
+    const result = await imagekit.upload({
+      file: fileBuffer,
+      fileName: fileName,
+      folder: "d20project/images",
+    });
 
-async function uploadImageInImagekit(file,filename) {
-
-      const response  = await imagekit.upload({
-        file:file,
-        filename:filename,
-        folders:'akjdfksj'
-      })
-
-    return response
-
-    
+    return result;
+  } catch (error) {
+    throw error;
+  }
 }
 
-module.exports = uploadImageInImagekit
+module.exports = uploadImageInImagekit;
