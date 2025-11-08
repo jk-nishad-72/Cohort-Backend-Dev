@@ -20,12 +20,14 @@ io.on("connection", (socket) => {
 
   console.log("A user connected ")
 //* in build events 
-  socket.on("disconnected",()=>{
+
+  socket.on("disconnected",()=>{ 
   console.log("A user disconnected ")
   })
 
 //* custom events  name koi bhhi likh sakte hai 
-/*  isme hamne message name diya hai 
+/*
+ *  isme hamne message name diya hai 
  *  data share bhi kr sakte hai 
  * jo callback function me milta hai 
  * normal text form and json , and binary form me share kar sakte hai 
@@ -42,10 +44,20 @@ io.on("connection", (socket) => {
 
 socket.on('ai-message',async(data)=>{
 
+
+  /** Backend ko ye data mil raha hai json form me 
+    {
+    "prompt":"What is css"
+   } 
+   */
     console.log("Received AI message: " , data.prompt);
     const response  = await genrateResponse(data.prompt)
     console.log("AI Response ",response)
-    socket.emit('ai-message-response',{response})
+
+
+    //* emit event listener ko bhej raha hai frontend ko 
+    socket.emit('ai-message-response',{response}) 
+    
 })
 
 

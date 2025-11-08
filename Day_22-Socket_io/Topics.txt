@@ -1,11 +1,19 @@
 
-Day_22 of Backend Development .. Socket . io 
+Day_22 of Backend Development .. Socket . io
 
+// Event Based communication[ Data sharing ] ->
 
+1)In-built events => two type→
 
-in-built events => two 1. connect
-                       2. disconnect
+1. connect
+2. disconnect
 
+2)custom events -> made by user
 
-custom events 
+- *How we perform ->
+- 1) socket.on()
+  2) socket.emit() 
+
+//* frontend ke events ko Backend se fire(emit [send]) karana our frontend me listen(on()) karana
+//* Backend ke events ko frontend se fire(emit) karana our Backend me listen (.on()) karana 
 
