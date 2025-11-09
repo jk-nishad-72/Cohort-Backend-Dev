@@ -7,15 +7,18 @@ const generateContent = require('./src/service/ai.service')
 const { text } = require('stream/consumers');
 
 const httpServer = createServer(app);
+
 const io = new Server(httpServer, { 
     cors: {
         origin: "http://localhost:5173", // Adjust 
-    }
+      }
 });
 //* implementing short term memory jo chatHistory hai 
 const chatHistory = [];
+
 io.on("connection", (socket) => {
     console.log('A new User Connected')
+
     socket.on('disconnected',()=>{
         console.log("A user disconnected")
     })
@@ -23,8 +26,7 @@ io.on("connection", (socket) => {
   //* ai-message 
 socket.on('ai-message',async(data)=>{
 
-    console.log("ai-message received",data)
-
+    console.log("ai-message received",data) 
     chatHistory.push({
         role:"user",
         parts:[{text:data}]
@@ -33,12 +35,14 @@ socket.on('ai-message',async(data)=>{
 
     //* ai-message-response 
     const response = await generateContent(chatHistory)
+    console.log(response);
+    
 
      chatHistory.push({
         role:"model",
         parts:[{text:response}]
      })
-      socket.emit('ai-message-response',response)
+      socket.emit('ai-message-response',response) 
 } )
 
 });

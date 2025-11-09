@@ -4,9 +4,8 @@ import './App.css'
 
 function App() {
   const [socket, setSocket] = useState(null)
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState([]) 
 
-  ])
   const [inputText, setInputText] = useState('')
 
   const handleSendMessage = () => {
@@ -22,7 +21,6 @@ function App() {
     setMessages(prevMessages => [...prevMessages, userMessage])
     
     socket.emit('ai-message', inputText)
-
     
     setInputText('')
     
@@ -41,6 +39,7 @@ function App() {
   }
 
   useEffect(() => {
+
     let socketInstance = io("http://localhost:3000"); 
     setSocket(socketInstance)
 
@@ -56,7 +55,7 @@ function App() {
       setMessages(prevMessages => [...prevMessages, botMessage])
       
     })
-  }, []);
+  }, []);   
 
   return (
     <div className="chat-container">
